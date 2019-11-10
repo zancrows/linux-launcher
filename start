@@ -1,0 +1,14 @@
+#!/usr/bin/bash --
+
+PATH='/usr/bin:/usr/local/bin:/opt/bin'
+IFS=' '
+bin_name=$1
+shift
+
+if command -v "$bin_name" &>/dev/null && bin="$(command -v "$bin_name")" ; then
+    nohup "$bin" "$@" </dev/null &>/dev/null &
+    pid=$(ps -u | pgrep "$bin_name")
+    echo "[+] $bin_name PID -> $pid"
+else
+    echo "Error: $bin_name not found"
+fi
